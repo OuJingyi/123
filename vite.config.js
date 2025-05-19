@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 
 const isProdEnv = process.env.NODE_ENV === 'production';
-const PUBLIC_PATH = isProdEnv ? process.env.PUBLIC_PATH + "/" + process.env.CHAT_VARIABLE : process.env.PUBLIC_PATH;
+const PUBLIC_PATH = isProdEnv ? '/' + process.env.PUBLIC_PATH + "/" + process.env.CHAT_VARIABLE : '/' + process.env.PUBLIC_PATH;
 const OUT_DIR = isProdEnv ? 'build/' + process.env.CHAT_VARIABLE : 'build';
 const PLUGINS  = isProdEnv ? [react()] : [
     react(),
@@ -153,7 +153,8 @@ export default defineConfig({
   ],
   base: PUBLIC_PATH,
   build: {
-    outDir: OUT_DIR
+    outDir: 'dist',
+    assetsDir: 'assets'
   },
   resolve: {
     alias: [
