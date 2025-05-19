@@ -1,7 +1,7 @@
 import { EnvelopeIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect, useRef } from "react";
-import WorldMap from '../components/WorldMap';
-import TravelStoryCard from '../components/TravelStoryCard';
+import WorldMap from './src/components/WorldMap';
+import TravelStoryCard from './src/components/TravelStoryCard';
 import { Mail, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
 
 const Index = () => {
