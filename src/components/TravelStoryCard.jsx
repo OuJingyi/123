@@ -1,19 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const TravelStoryCard = ({ city, country, imageUrl, description }) => {
-  return (
-    <div className="min-w-[300px] bg-gray-900 rounded-lg overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:z-10 relative">
+const TravelStoryCard = ({ city, country, imageUrl, onImageLoad, isLoaded, link }) => {
+  const [isImageLoading, setIsImageLoading] = useState(true);
+
+  const handleImageLoad = () => {
+    setIsImageLoading(false);
+    onImageLoad && onImageLoad();
+  };
+
+  const content = (
+    <div className="w-full aspect-[16/10] bg-gray-900 rounded-lg overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:z-10 relative">
+      {/* 加载占位符 */}
+      {isImageLoading && (
+        <div className="absolute inset-0 image-placeholder animate-pulse" />
+      )}
+      
+      {/* 图片 */}
       <img 
         src={imageUrl || `https://nocode.meituan.com/photo/search?keyword=travel,landscape&width=300&height=200`} 
-        className="w-full h-48 object-cover" 
-        alt={`${city} 旅行故事`} 
+        className={`w-full h-full object-cover transition-opacity duration-300 ${
+          isImageLoading ? 'opacity-0' : 'opacity-100'
+        }`}
+        alt={`${city} 旅行故事`}
+        loading="lazy"
+        onLoad={handleImageLoad}
       />
-      <div className="p-4">
-        <h3 className="text-xl font-semibold mb-2">{city}, {country}</h3>
-        <p className="text-gray-400">{description || "这是一段旅行故事的简短描述，记录下旅途中的精彩瞬间..."}</p>
-      </div>
     </div>
   );
+
+  if (link) {
+    return (
+      <a 
+        href={link} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="block"
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return content;
 };
 
 export default TravelStoryCard; 
